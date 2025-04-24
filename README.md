@@ -34,12 +34,12 @@ This js file contained the classes and event listener for the application
     It has five methods:
   - updateTimer()  
       This method updates the countdown timer logic and handles how time decreases per second. It also ensures the timer stops at zero and updates the display each time it's called
-  - startTimer()
+  - startTimer()  
       This method starts the countdown. It updates the timer every second using setInterval and shows the initial time with displayTimer().
-  - stopTimer()
+  - stopTimer()  
       This method stops the countdown by clearing the interval.
-  - resetTimer()
+  - resetTimer()  
       This method first call stopTimer method to stop the timer then check if the three timers' class does not contain hidden, then it update the timer text to the timer's duration.
-  - displayTimer()
+  - displayTimer()  
       This method updates the timer display. It checks which timer section is visible and sets its text to the timer's duration.
   
