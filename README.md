@@ -41,5 +41,5 @@ This js file contained the classes and event listener for the application
   - resetTimer()
       This method first call stopTimer method to stop the timer then check if the three timers' class does not contain hidden, then it update the timer text to the timer's duration.
   - displayTimer()
-      This method updates the timer display. It checks which timer section is visible and sets its <p> text to the timer's duration.
+      This method updates the timer display. It checks which timer section is visible and sets its text to the timer's duration.
   
