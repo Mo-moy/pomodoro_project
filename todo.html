@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITAS 192 Assignment 1</title>
+
+    <!-- favicon stuff  and so i dont have to see the error in console-->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- tailwind cdn using version 4-->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<!-- This siwtches to either light or dark mode based on your system setting I think -->
+<body class="bg-neutral-100 text-neutral-100">
+    <!-- To do list  -->
+    <div id="todo-list" class="max-w-6xl mx-auto my-15 py-5 bg-slate-400 rounded-xl">
+        <!-- add task -->
+        <!-- this used to be form, but took me a while to figure out how to stop the website from refreshing everytim i add a new object  -->
+        <div class="max-w-4xl mx-auto py-2">   
+            <h1 class="font-semibold text-3xl mb-3">Todo List</h1>
+            <div class="relative">
+                <input type="input" id="todo-content" class="w-full p-4 text-neutral-900 bg-white rounded-xl focus:outline-none" placeholder="Add Task" required/>
+                <button type="submit" id="add-todo" class=" px-5 py-2 absolute end-2.5 bottom-2.5 bg-slate-400 rounded-xl hover:bg-slate-500 focus:outline-none">
+                    <!-- add icon from https://heroicons.com/outline -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+                    </svg>                          
+                </button>
+            </div>
+        </div>
+
+        <!-- show the completed task bar, and the remove checked button -->
+        <div class="flex justify-center items-center max-w-4xl w-full mx-auto mt-2">
+            <div class="basis-2/3">
+                <div id="task-counter" class="h-10 px-10 bg-slate-500 text-md font-semibold text-center p-3 leading-none rounded-xl"> 
+                    <!-- the output will be innerHTML, to show how much tasks are completed -->
+                </div>
+            </div>
+            <div class="basis-1/3">
+                <button type="button" id="remove-all-complete" class="ml-1 px-10 py-1.5 text-lg font-sans font-semibold bg-slate-500 rounded-xl hover:bg-slate-700 focus:outline-none">
+                    Remove Completed Tasks
+                </button>
+            </div>
+        </div>
+
+        <!-- list of tasks -->
+        <div class="max-w-4xl mx-auto pt-4">
+            <div id="todo-display" class="pb-3">
+                <!-- the task should be shown here from an iinerHTML in js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Pomodoro Timer -->
+    <div id="pomodoro-timer" class="max-w-4xl mx-auto my-5 pt-6 px-5 rounded-lg text-neutral-100 bg-red-400 hidden">
+        <!-- button group for timers -->
+        <div class="flex justify-center space-x-2 rounded-lg" role="mode-group">
+            <button type="button" id="pomodoro-btn" class="px-5 py-2 text-lg font-sans font-semibold bg-red-500 rounded-xl hover:bg-red-700 focus:outline-none">
+              Pomodoro
+            </button>
+            <button type="button" id="short-break-btn" class="px-5 py-2 text-lg font-sans font-semibold bg-red-500 rounded-xl hover:bg-red-700 focus:outline-none">
+              Short Break
+            </button>
+            <button type="button" id="long-break-btn" class="px-5 py-2 text-lg font-sans font-semibold bg-red-500 rounded-xl hover:bg-red-700 focus:outline-none">
+              Long Break
+            </button>
+        </div>
+        <!-- timer depending on the mode -->
+        <div id="pomodoro-part" class="">
+            <p id="pomo-timer" class="mx-auto py-10 text-9xl text-center font-sans font-semibold">25:00</p>
+        </div>
+        <div id="short-break-part" class="hidden">
+            <p id="short-timer" class="mx-auto py-10 text-9xl text-center font-sans font-semibold">5:00</p>
+        </div>
+        <div id="long-break-part" class="hidden">
+            <p id="long-timer" class="mx-auto py-10 text-9xl text-center font-sans font-semibold">15:00</p>
+        </div>
+        <!-- buttons for start, stop, reset -->
+         <!-- all svg i use is from heroicon -->
+        <div class="flex justify-center space-x-2 pt-4 rounded-lg" role="function-group">
+            <button type="button" id="start-btn" class="px-5 py-4 text-red-400 text-lg font-semibold bg-neutral-100 rounded-xl hover:text-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd" />
+                </svg>                  
+            </button>
+            <button type="button" id="pause-btn" class="px-5 py-4 text-red-400 text-lg font-semibold bg-neutral-100 rounded-xl hover:text-red-600 hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z" clip-rule="evenodd" />
+                </svg>                  
+            </button>
+            <button type="button" id="reset-btn" class="px-5 py-4  text-red-400 text-lg font-semibold bg-neutral-100 rounded-xl hover:text-red-600 hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clip-rule="evenodd" />
+                </svg>                  
+            </button>
+        </div>
+        <!-- divider -->
+        <div class="mx-auto mt-5 max-w-xl py-1 bg-neutral-100 rounded-full"></div>
+        <!-- show the current task -->
+        <p class="text-center text-3xl font-sans font-semibold my-3">Task</p>
+        <div id="pomodoro-task" class="mx-auto max-w-xl my-5 py-2">
+            <div class="max-w-lg mx-auto py-2 pb-4 mb-5 bg-neutral-100 rounded-xl">   
+                <div class="relative flex items-center mt-2">
+                    <input id="pomodoro-task-checkbox" type="checkbox" value="" class="accent-red-400 h-9 w-4 rounded-md ml-5">
+                    <label for="pomodoro-task-checkbox" id="pomodoro-task-content" class="text-md text-red-400 ml-4"></label>
+                </div>
+            </div>            
+            <button type="button" id="exit-btn" class="flex justify-center mx-auto px-5 py-4 mb-3 text-neutral-100 text-lg font-semibold">Back to List</button>
+        </div>
+    </div>
+
+    <!-- Script sources -->
+    <script src="js/tasklist.js"></script>   
+    <script src="js/todo.js"></script>
+</body>
+</html>
